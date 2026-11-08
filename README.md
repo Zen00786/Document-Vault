@@ -1,20 +1,26 @@
-# Doc Vault + #OneMealForward website
+﻿# Doc Vault + OneMealForward website
 
-Responsive static website for GitHub Pages. No framework, build step, npm install, or backend required.
+Responsive static campaign site with an optional, voluntary self-reported participation counter. Ordinary page visits only read the count; they never increment it.
 
-## Preview
-Open `index.html` in a browser.
+## Shared counter
+
+The site uses [Count API](https://countapi.mileshilliard.com/), a free hosted counter with no account or API key. It reads the public named counter `onemealforward_contributions` with `GET /api/v1/get/{key}` and increments it with `GET /api/v1/hit/{key}` only after a visitor checks the voluntary confirmation and submits. If the service reports that the key does not exist, the page displays zero; no count is seeded or incremented on page load.
+
+The counter is public and anyone who knows its name can read or increment it. The service documents rate limiting, but the site cannot reliably prevent duplicate clicks, retries after an ambiguous network failure, or deliberate abuse. Counts are self-reported acknowledgements, not verified meals. The service may process normal request metadata. No name, contact details, meal details, proof, or Doc Vault data is sent.
+
+## Campaign artwork and card actions
+
+`assets/onemealforward-campaign.png` is cropped from the existing `Doc Vault & OneMealForward Brand Showcase.png`; the showcase itself is preserved. Share uses the image file where Web Share supports file sharing and downloads the same image as a fallback. Download saves only that image. Print uses a print stylesheet that displays only the image.
+
+## Local preview
+
+Open `index.html` for a quick preview. For browser APIs, serve this directory from localhost, for example `python -m http.server 8000`, and open `http://localhost:8000`.
 
 ## Publish with GitHub Pages
-1. Create a public GitHub repository, for example `doc-vault-site`.
-2. Upload all files and the `assets` folder to the repository root.
-3. Open **Settings → Pages**.
-4. Select **Deploy from a branch**, branch `main`, folder `/ (root)`, then save.
-5. Wait for the published URL and test on desktop and mobile.
 
-## Important before launch
-- The Play Store link is intentionally a placeholder. Set `PLAY_STORE_URL` in `script.js` to the real listing URL after publication.
-- “I Did It” opens a thank-you/share panel. It does not count or verify people/meals. A static page cannot maintain a shared live count without an external service/backend.
-- The QR area is labelled as a placeholder, not a real QR code. Add a QR only after the final public app/site URL exists.
-- The campaign card can be printed/saved as PDF or screenshotted. This avoids pretending every browser can export a PNG from HTML.
-- Verify features and recovery claims against the final app before public launch.
+1. Upload the contents of this directory (`index.html`, `styles.css`, `script.js`, and `assets/`) to the campaign repository root.
+2. In GitHub, open **Settings → Pages**, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
+3. After GitHub shows the published URL, open `<published-url>/#kindness` and verify HTTPS works.
+4. Set `ONE_MEAL_FORWARD_URL` in Doc Vault's `app.js` to that campaign URL ending in `#kindness`, then rebuild the web assets and Android debug app if distributing it.
+
+No SQL, database project, credentials, account setup, push, or deployment is required by this local implementation. The Google Play link remains a placeholder until the app is published. The site's QR placeholder remains intentionally unpopulated.
